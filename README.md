@@ -43,7 +43,7 @@ Map results (16 bit) of OASIS in three online settings defined in our paper.
 
 [OMH-DQ LINK](https://github.com/lxuu306/OMH-DQ_SIGIR2019)
 
-[SAMPH LINK](https://github.com/ChaoqunZheng/APMH)
+[SAPMH LINK](https://github.com/ChaoqunZheng/APMH)
 
 ## Citation
 
