@@ -1,4 +1,4 @@
-function [train_param,XTrain,LTrain,LTrain_All,XQuery,LQuery,LQuery_All,K,K_All] = load_dataset(train_param)
+function [train_param,XTrain,LTrain,XQuery,LQuery,K] = load_dataset(train_param)
     fprintf(['-------load dataset------', '\n']);
     load([train_param.ds_name,'_deep.mat']);
     load([train_param.ds_name,'_Groundtrue_Vec.mat']);
@@ -24,23 +24,19 @@ function [train_param,XTrain,LTrain,LTrain_All,XQuery,LQuery,LQuery_All,K,K_All]
 
             XTrain = cell(train_param.nchunks,1);
             LTrain = cell(train_param.nchunks,1);
-            LTrain_All = cell(train_param.nchunks,1);
 
             XQuery = cell(train_param.nchunks,1);
             LQuery = cell(train_param.nchunks,1);
-            LQuery_All = cell(train_param.nchunks,1);
 
             K = cell(train_param.nchunks,1);
 
             for subi = 1:train_param.nchunks-1
                 XTrain{subi,1} = X(sampleInds(expected_chunksize*(subi-1)+1:expected_chunksize*subi),:);
                 LTrain{subi,1} = L(sampleInds(expected_chunksize*(subi-1)+1:expected_chunksize*subi),:);
-                LTrain_All{subi,1} = LTrain{subi,1};
                 [train_param.chunksize{subi, 1},~] = size(XTrain{subi,1});
 
                 XQuery{subi,1} = X(queryInds, :);
                 LQuery{subi,1} = L(queryInds, :);
-                LQuery_All{subi,1} = LQuery{subi,1};
                 [train_param.test_chunksize{subi, 1},~] = size(XQuery{subi,1});
 
                 K{subi,1} = mir_gt_vec;
@@ -48,16 +44,13 @@ function [train_param,XTrain,LTrain,LTrain_All,XQuery,LQuery,LQuery_All,K,K_All]
 
             XTrain{train_param.nchunks,1} = X(sampleInds(expected_chunksize*subi+1:end),:);
             LTrain{train_param.nchunks,1} = L(sampleInds(expected_chunksize*subi+1:end),:);
-            LTrain_All{train_param.nchunks,1} = LTrain{train_param.nchunks,1};
             [train_param.chunksize{train_param.nchunks, 1},~] = size(XTrain{train_param.nchunks,1});
 
             XQuery{train_param.nchunks,1} = X(queryInds, :);
             LQuery{train_param.nchunks,1} = L(queryInds, :);
-            LQuery_All{train_param.nchunks,1} = LQuery{train_param.nchunks,1};
             [train_param.test_chunksize{train_param.nchunks, 1},~] = size(XQuery{train_param.nchunks,1});
 
             K{train_param.nchunks,1} = mir_gt_vec;           
-            K_All=K;
             
         elseif strcmp(train_param.load_type, 'second_setting')
             X = [I_tr T_tr; I_te T_te];
@@ -72,29 +65,26 @@ function [train_param,XTrain,LTrain,LTrain_All,XQuery,LQuery,LQuery_All,K,K_All]
             labels=linspace(1,24,24);
             seperate=cell(train_param.nchunks,1);
             seperate{1,1}=[1];
-            seperate{2,1}=[2,23];
-            seperate{3,1}=[3,22];
-            seperate{4,1}=[4,21];
-            seperate{5,1}=[5];
-            seperate{6,1}=[6,19];
-            seperate{7,1}=[16,17,18,20];
-            seperate{8,1}=[8,7,24];
-            seperate{9,1}=[9,10,15,13];
-            seperate{10,1}=[11,12,13,14];
+            seperate{2,1}=[2,3,4];
+            seperate{3,1}=[5,6];
+            seperate{4,1}=[7,8];
+            seperate{5,1}=[9,10];
+            seperate{6,1}=[11,12];
+            seperate{7,1}=[13,14];
+            seperate{8,1}=[15,16,17];
+            seperate{9,1}=[18,19,20];
+            seperate{10,1}=[21,22,23,24];
             
             train_param.chunksize = cell(train_param.nchunks,1);
             train_param.test_chunksize = cell(train_param.nchunks,1);
 
             XTrain = cell(train_param.nchunks,1);
             LTrain = cell(train_param.nchunks,1);
-            LTrain_All = cell(train_param.nchunks,1);
 
             XQuery = cell(train_param.nchunks,1);
             LQuery = cell(train_param.nchunks,1);
-            LQuery_All = cell(train_param.nchunks,1);
 
             K = cell(train_param.nchunks,1);
-            K_All = cell(train_param.nchunks,1);
             
             label_allow=[];
             last_found_idx=[];
@@ -116,14 +106,11 @@ function [train_param,XTrain,LTrain,LTrain_All,XQuery,LQuery,LQuery_All,K,K_All]
                 
                 XTrain{l,1}=X_tmp(sampleInds,:);
                 LTrain{l,1}=L_tmp(sampleInds,:);
-                LTrain_All{l,1}=L_all_tmp(sampleInds,:);
                 
                 XQuery{l,1}=X_tmp(queryInds,:);
                 LQuery{l,1}=L_tmp(queryInds,:);
-                LQuery_All{l,1}=L_all_tmp(queryInds,:);
                 
                 K{l,1}=mir_gt_vec(label_allow,:);
-                K_All{l,1}=mir_gt_vec;
                 
                 train_param.chunksize{l,1}=size(sampleInds,2);
                 train_param.test_chunksize{l,1}=size(queryInds,2);
@@ -138,31 +125,25 @@ function [train_param,XTrain,LTrain,LTrain_All,XQuery,LQuery,LQuery_All,K,K_All]
             L=L(:,L_idx);
             mir_gt_vec=mir_gt_vec(L_idx,:);
             
-            train_param.nchunks=7;
+            train_param.nchunks=4;
             
             labels=linspace(1,24,24);
             seperate=cell(train_param.nchunks,1);
-            seperate{1,1}=[1];
-            seperate{2,1}=[2,23,8,24,4,21,16,17,18,20];
-            seperate{3,1}=[3,22];
+            seperate{1,1}=[1,2];
+            seperate{2,1}=[3,4,6,7,8,9,10,11];
+            seperate{3,1}=[12,13,14,15,16,17,18,19,20,21,22,23,24];
             seperate{4,1}=[5];
-            seperate{5,1}=[6,7,19];
-            seperate{6,1}=[9,10,15,13];
-            seperate{7,1}=[11,12,13,14];
             
             train_param.chunksize = cell(train_param.nchunks,1);
             train_param.test_chunksize = cell(train_param.nchunks,1);
 
             XTrain = cell(train_param.nchunks,1);
             LTrain = cell(train_param.nchunks,1);
-            LTrain_All = cell(train_param.nchunks,1);
 
             XQuery = cell(train_param.nchunks,1);
             LQuery = cell(train_param.nchunks,1);
-            LQuery_All = cell(train_param.nchunks,1);
 
             K = cell(train_param.nchunks,1);
-            K_All= cell(train_param.nchunks,1);
             
             label_appear=[];
             
@@ -182,14 +163,11 @@ function [train_param,XTrain,LTrain,LTrain_All,XQuery,LQuery,LQuery_All,K,K_All]
                 
                 XTrain{l,1}=X_tmp(sampleInds,:);
                 LTrain{l,1}=L_tmp(sampleInds,:);
-                LTrain_All{l,1}=L_all_tmp(sampleInds,:);
                 
                 XQuery{l,1}=X_tmp(queryInds,:);
                 LQuery{l,1}=L_tmp(queryInds,:);
-                LQuery_All{l,1}=L_all_tmp(queryInds,:);
                 
                 K{l,1}=mir_gt_vec(label_appear,:);
-                K_All{l,1}=mir_gt_vec;
                 
                 train_param.chunksize{l,1}=size(sampleInds,2);
                 
@@ -220,23 +198,19 @@ function [train_param,XTrain,LTrain,LTrain_All,XQuery,LQuery,LQuery_All,K,K_All]
 
             XTrain = cell(train_param.nchunks,1);
             LTrain = cell(train_param.nchunks,1);
-            LTrain_All = cell(train_param.nchunks,1);
 
             XQuery = cell(train_param.nchunks,1);
             LQuery = cell(train_param.nchunks,1);
-            LQuery_All = cell(train_param.nchunks,1);
 
             K = cell(train_param.nchunks,1);
 
             for subi = 1:train_param.nchunks-1
                 XTrain{subi,1} = X(sampleInds(expected_chunksize*(subi-1)+1:expected_chunksize*subi),:);
                 LTrain{subi,1} = L(sampleInds(expected_chunksize*(subi-1)+1:expected_chunksize*subi),:);
-                LTrain_All{subi,1} = LTrain{subi,1};
                 [train_param.chunksize{subi, 1},~] = size(XTrain{subi,1});
 
                 XQuery{subi,1} = X(queryInds, :);
                 LQuery{subi,1} = L(queryInds, :);
-                LQuery_All{subi,1} = LQuery{subi,1};
                 [train_param.test_chunksize{subi, 1},~] = size(XQuery{subi,1});
 
                 K{subi,1} = nus_gt_vec;
@@ -244,16 +218,13 @@ function [train_param,XTrain,LTrain,LTrain_All,XQuery,LQuery,LQuery_All,K,K_All]
 
             XTrain{train_param.nchunks,1} = X(sampleInds(expected_chunksize*subi+1:end),:);
             LTrain{train_param.nchunks,1} = L(sampleInds(expected_chunksize*subi+1:end),:);
-            LTrain_All{train_param.nchunks,1} = LTrain{train_param.nchunks,1};
             [train_param.chunksize{train_param.nchunks, 1},~] = size(XTrain{train_param.nchunks,1});
 
             XQuery{train_param.nchunks,1} = X(queryInds, :);
             LQuery{train_param.nchunks,1} = L(queryInds, :);
-            LQuery_All{train_param.nchunks,1} = LQuery{train_param.nchunks,1};
             [train_param.test_chunksize{train_param.nchunks, 1},~] = size(XQuery{train_param.nchunks,1});
 
             K{train_param.nchunks,1} = nus_gt_vec;
-            K_All=K;
             
         elseif strcmp(train_param.load_type, 'second_setting')
             X = [I_tr T_tr; I_te T_te];
@@ -289,14 +260,11 @@ function [train_param,XTrain,LTrain,LTrain_All,XQuery,LQuery,LQuery_All,K,K_All]
 
             XTrain = cell(train_param.nchunks,1);
             LTrain = cell(train_param.nchunks,1);
-            LTrain_All = cell(train_param.nchunks,1);
 
             XQuery = cell(train_param.nchunks,1);
             LQuery = cell(train_param.nchunks,1);
-            LQuery_All = cell(train_param.nchunks,1);
 
             K = cell(train_param.nchunks,1);
-            K_All = cell(train_param.nchunks,1);
             
             label_allow=[];
             last_found_idx=[];
@@ -318,14 +286,11 @@ function [train_param,XTrain,LTrain,LTrain_All,XQuery,LQuery,LQuery_All,K,K_All]
                 
                 XTrain{l,1}=X_tmp(sampleInds,:);
                 LTrain{l,1}=L_tmp(sampleInds,:);
-                LTrain_All{l,1}=L_all_tmp(sampleInds,:);
                 
                 XQuery{l,1}=X_tmp(queryInds,:);
                 LQuery{l,1}=L_tmp(queryInds,:);
-                LQuery_All{l,1}=L_all_tmp(queryInds,:);
                 
                 K{l,1}=nus_gt_vec(label_allow,:);
-                K_All{l,1}=nus_gt_vec;
                 
                 train_param.chunksize{l,1}=size(sampleInds,2);
                 train_param.test_chunksize{l,1}=size(queryInds,2);
@@ -335,35 +300,29 @@ function [train_param,XTrain,LTrain,LTrain_All,XQuery,LQuery,LQuery_All,K,K_All]
             X = [I_tr T_tr; I_te T_te];
             L = [L_tr; L_te];
             
-            
             train_param.nchunks=10;
             
             labels=linspace(1,21,21);
             seperate=cell(train_param.nchunks,1);
-            seperate{1,1}=[1,21];
-            seperate{2,1}=[2,20];
-            seperate{3,1}=[3,19];
-            seperate{4,1}=[4,18];
-            seperate{5,1}=[5,17];
-            seperate{6,1}=[6,16];
-            seperate{7,1}=[7,15];
-            seperate{8,1}=[8,14];
-            seperate{9,1}=[9,13];
-            seperate{10,1}=[10,11,12];
+            seperate{1,1}=[2,10,];
+            seperate{2,1}=[4,6,7];
+            seperate{3,1}=[8,9,10];
+            seperate{4,1}=[11,12,13];
+            seperate{5,1}=[14,15,16,17,18,19,20,21];
+            seperate{6,1}=[1];
+            seperate{7,1}=[3];
+            seperate{8,1}=[5];
             
             train_param.chunksize = cell(train_param.nchunks,1);
             train_param.test_chunksize = cell(train_param.nchunks,1);
 
             XTrain = cell(train_param.nchunks,1);
             LTrain = cell(train_param.nchunks,1);
-            LTrain_All = cell(train_param.nchunks,1);
 
             XQuery = cell(train_param.nchunks,1);
             LQuery = cell(train_param.nchunks,1);
-            LQuery_All = cell(train_param.nchunks,1);
 
             K = cell(train_param.nchunks,1);
-            K_All= cell(train_param.nchunks,1);
             
             label_appear=[];
             
@@ -383,14 +342,11 @@ function [train_param,XTrain,LTrain,LTrain_All,XQuery,LQuery,LQuery_All,K,K_All]
                 
                 XTrain{l,1}=X_tmp(sampleInds,:);
                 LTrain{l,1}=L_tmp(sampleInds,:);
-                LTrain_All{l,1}=L_all_tmp(sampleInds,:);
                 
                 XQuery{l,1}=X_tmp(queryInds,:);
                 LQuery{l,1}=L_tmp(queryInds,:);
-                LQuery_All{l,1}=L_all_tmp(queryInds,:);
                 
                 K{l,1}=nus_gt_vec(label_appear,:);
-                K_All{l,1}=nus_gt_vec;
                 
                 train_param.chunksize{l,1}=size(sampleInds,2);            
                 train_param.test_chunksize{l,1}=size(queryInds,2);
