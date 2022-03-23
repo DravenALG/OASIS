@@ -129,10 +129,11 @@ function [train_param,XTrain,LTrain,XQuery,LQuery,K] = load_dataset(train_param)
             
             labels=linspace(1,24,24);
             seperate=cell(train_param.nchunks,1);
-            seperate{1,1}=[1,2];
-            seperate{2,1}=[3,4,6,7,8,9,10,11];
-            seperate{3,1}=[12,13,14,15,16,17,18,19,20,21,22,23,24];
-            seperate{4,1}=[5];
+            seperate{1,1}=[5];
+            seperate{2,1}=[1,2];
+            seperate{3,1}=[3,4,6,7,8,9,10,11];
+            seperate{4,1}=[12,13,14,15,16,17,18,19,20,21,22,23,24];
+            
             
             train_param.chunksize = cell(train_param.nchunks,1);
             train_param.test_chunksize = cell(train_param.nchunks,1);
@@ -304,14 +305,15 @@ function [train_param,XTrain,LTrain,XQuery,LQuery,K] = load_dataset(train_param)
             
             labels=linspace(1,21,21);
             seperate=cell(train_param.nchunks,1);
-            seperate{1,1}=[2,10,];
-            seperate{2,1}=[4,6,7];
-            seperate{3,1}=[8,9,10];
-            seperate{4,1}=[11,12,13];
-            seperate{5,1}=[14,15,16,17,18,19,20,21];
-            seperate{6,1}=[1];
-            seperate{7,1}=[3];
-            seperate{8,1}=[5];
+            seperate{1,1}=[1];
+            seperate{2,1}=[3];
+            seperate{3,1}=[5];
+            seperate{4,1}=[2,10,];
+            seperate{5,1}=[4,6,7];
+            seperate{6,1}=[8,9,10];
+            seperate{7,1}=[11,12,13];
+            seperate{8,1}=[14,15,16,17,18,19,20,21];
+
             
             train_param.chunksize = cell(train_param.nchunks,1);
             train_param.test_chunksize = cell(train_param.nchunks,1);

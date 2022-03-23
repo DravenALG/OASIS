@@ -32,7 +32,7 @@ Map results (16 bit) of OASIS in three online settings defined in our paper.
 | :----------------: | :-------: | :------: |
 | **First setting**  |  0.8558   |  0.7742  |
 | **Second setting** |  0.7833   |  0.7931  |
-| **Third setting**  |  0.3292   |  0.2386  |
+| **Third setting**  |  0.1595   |  0.1211  |
 
 ## Notes
 
