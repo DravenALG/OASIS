@@ -1,6 +1,6 @@
 # Online Enhanced Semantic Hashing Towards Effective and Efficient Retrieval for Streaming Multi-Modal Data
 
-Official implement of OASIS.  | [Paper](https://arxiv.org/abs/2109.04260) | [Personal Homepage](https://dravenalg.github.io/).
+Official implement of OASIS.  | [Paper](https://ojs.aaai.org/index.php/AAAI/article/view/20346) | [Personal Homepage](https://dravenalg.github.io/).
 
 Xiao-Ming Wu, Xin Luo, Yu-Wei Zhan, Chen-Lu Ding, Zhen-Duo Chen, Xin-Shun Xu.
 
