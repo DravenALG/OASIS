@@ -308,9 +308,9 @@ function [train_param,XTrain,LTrain,XQuery,LQuery,K] = load_dataset(train_param)
             seperate{1,1}=[1];
             seperate{2,1}=[3];
             seperate{3,1}=[5];
-            seperate{4,1}=[2,10,];
+            seperate{4,1}=[2,10];
             seperate{5,1}=[4,6,7];
-            seperate{6,1}=[8,9,10];
+            seperate{6,1}=[8,9];
             seperate{7,1}=[11,12,13];
             seperate{8,1}=[14,15,16,17,18,19,20,21];
 
