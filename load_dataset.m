@@ -256,6 +256,7 @@ function [train_param,XTrain,LTrain,XQuery,LQuery,K] = load_dataset(train_param)
             seperate{19,1}=[19];
             seperate{20,1}=[20,21];
             
+            
             train_param.chunksize = cell(train_param.nchunks,1);
             train_param.test_chunksize = cell(train_param.nchunks,1);
 
