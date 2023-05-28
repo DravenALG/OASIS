@@ -36,7 +36,6 @@ Map results (16 bit) of OASIS in three online settings defined in our paper.
 | **Third setting**  |  0.1595   |  0.1211  |
 
 ## Notes
-- The MAP results are different for the two versions on arvix. Because in the second version, we modified the way we divided the data under the second and the third settings, which is more rational and equal for each category. Then we reran all the experiments many times and used the average to get a more stable and accurate results. 
 - We have generated the word2vec vectors corresponding to MIRFlickr and NUS-WIDE and placed them with our data. Therefore, no additional generation is required. If you want to generate the word embeddings yourself, we also include the label names in the data.
 - The code of the baselines can be obtained from the link below.
 
@@ -45,6 +44,12 @@ Map results (16 bit) of OASIS in three online settings defined in our paper.
 [OMH-DQ LINK](https://github.com/lxuu306/OMH-DQ_SIGIR2019)
 
 [SAPMH LINK](https://github.com/ChaoqunZheng/APMH)
+
+
+## The arXiv Versions
+- Here we detial the modify of different versions in arXiv. 
+- v1: The original version submiting to AAAI.
+- v2: The final version in camera ready. We modified the way we divided the data under the second and the third settings, which is more equal for each round. Then we reran all the experiments many times and used the average to get a more stable and robust results.
 
 ## Citation
 
