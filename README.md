@@ -6,7 +6,7 @@ Xiao-Ming Wu, Xin Luo, Yu-Wei Zhan, Chen-Lu Ding, Zhen-Duo Chen, Xin-Shun Xu.
 
 Accepted at AAAI 2022!
 
-If you have any questions, feel free to contact me by wuxiaoming.alg@gmail.com.
+If you have any questions, feel free to contact me by wuxm65@mail2.sysu.edu.cn.
 
 
 ## Abstract
