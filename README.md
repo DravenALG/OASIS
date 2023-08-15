@@ -56,11 +56,14 @@ Map results (16 bit) of OASIS in three online settings defined in our paper.
 If you use our code or models in your research, please cite our paper with
 
 ```
-@article{wu2021online,
+@inproceedings{wu2022online,
   title={Online Enhanced Semantic Hashing: Towards Effective and Efficient Retrieval for Streaming Multi-Modal Data},
   author={Wu, Xiao-Ming and Luo, Xin and Zhan, Yu-Wei and Ding, Chen-Lu and Chen, Zhen-Duo and Xu, Xin-Shun},
-  journal={arXiv preprint arXiv:2109.04260},
-  year={2021}
+  booktitle={Proceedings of the AAAI conference on artificial intelligence},
+  volume={36},
+  number={4},
+  pages={4263--4271},
+  year={2022}
 }
 ```
 
