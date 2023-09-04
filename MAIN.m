@@ -2,7 +2,7 @@
 close all; clear; clc; warning off;
 
 %% globel settings
-train_param.current_bits = 128;
+train_param.current_bits = 16;
 train_param.max_iter=5;
 
 %% load dataset
