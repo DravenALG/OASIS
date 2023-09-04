@@ -39,7 +39,7 @@ function [BB,WW,HH,param] = train_OASIS(XTrain_new,LTrain_new,GTrain_new,Kt,BB,H
              
         
         % update U
-        U_new = (GTrain_new*V_new'+HH{1,2})/(V_new*V_new'+HH{1,3}+thet);
+        U_new = (GTrain_new*V_new'+HH{1,2})/(V_new*V_new'+HH{1,3}+thet*eye(nbits));
         
         % update W
         WW{1,1}=(B_new*Xm1'+HH{1,5})/(Xm1*Xm1'+HH{1,6}+delta*eye(param.image_feature_size));
